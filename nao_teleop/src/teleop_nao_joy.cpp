@@ -72,7 +72,7 @@ TeleopNaoJoy::TeleopNaoJoy()
   m_headAngles.speed = 0.2; // TODO: param
 
   m_movePub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
-  m_headPub = nh.advertise<naoqi_bridge_msgs::JointAnglesWithSpeed>("joint_angles", 1);
+  m_headPub = nh.advertise<naoqi_bridge_msgs::JointAnglesWithSpeed>("/pepper_robot/pose/joint_angles", 1);
   m_speechPub = nh.advertise<std_msgs::String>("speech", 1);
   m_inhibitWalkSrv = nh.advertiseService("inhibit_walk", &TeleopNaoJoy::inhibitWalk, this);
   m_uninhibitWalkSrv = nh.advertiseService("uninhibit_walk", &TeleopNaoJoy::uninhibitWalk, this);
@@ -181,8 +181,8 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
       // move head
       m_headAngles.header.stamp = ros::Time::now();
       m_headAngles.relative = 1;
-      m_headAngles.joint_angles[0] = joy->axes[m_turnAxis];
-      m_headAngles.joint_angles[1] = joy->axes[m_xAxis];
+      m_headAngles.joint_angles[0] = joy->axes[m_headPitchAxis];
+      m_headAngles.joint_angles[1] = joy->axes[m_headYawAxis];
 
     } else {
       // stop head:

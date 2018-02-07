@@ -1,0 +1,42 @@
+axis_x: 1
+axis_y: 0
+axis_turn: 2
+btn_head_mod: 4
+axis_head_yaw: 5
+axis_head_pitch: 2 
+btn_enable_control: 9
+btn_crouch: 1
+btn_start_scan: 0
+btn_stop_scan: 4
+btn_init_pose: 3
+
+# new specs of ps4 controller
+
+# Nr. 	button
+# 0 	square
+# 1	x
+# 2	circle
+# 3	triangle
+# 4	L1
+# 5	R1
+# 6	L2
+# 7	R2
+# 8	share
+# 9 	options
+# 10	
+# 11	left joystick click
+# 12	right joystick click
+# 13 	PS symbol button
+# 14	touchpad click
+
+# joystick		axes	value	direction
+# left joystick: 	0	1	left
+# 			0	-1	right
+# 			1	1	forward
+#			1	-1	backwards
+
+# right joystick	2	1	right
+#			2	-1	left
+#			5	1	forward	
+#			5	-1	backwards
+

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
    <rosparam file="$(find nao_teleop)/config/ps3controller.yaml" command="load" ns="teleop_nao_joy" />
 </launch>
