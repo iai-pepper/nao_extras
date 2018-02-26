@@ -72,7 +72,7 @@ TeleopNaoJoy::TeleopNaoJoy()
   m_headAngles.speed = 0.2; // TODO: param
 
   m_movePub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
-  m_headPub = nh.advertise<naoqi_bridge_msgs::JointAnglesWithSpeed>("/pepper_robot/pose/joint_angles", 1);
+  m_headPub = nh.advertise<naoqi_bridge_msgs::JointAnglesWithSpeed>("pose/joint_angles", 1);
   m_speechPub = nh.advertise<std_msgs::String>("speech", 1);
   m_inhibitWalkSrv = nh.advertiseService("inhibit_walk", &TeleopNaoJoy::inhibitWalk, this);
   m_uninhibitWalkSrv = nh.advertiseService("uninhibit_walk", &TeleopNaoJoy::uninhibitWalk, this);
