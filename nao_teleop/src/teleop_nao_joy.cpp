@@ -40,7 +40,8 @@ namespace nao_teleop{
 TeleopNaoJoy::TeleopNaoJoy()
 : privateNh("~"), m_enabled(false),
   m_xAxis(3), m_yAxis(2), m_turnAxis(0), m_headYawAxis(4),	m_headPitchAxis(5),
-  m_crouchBtn(8), m_initPoseBtn(0), m_enableBtn(9), m_modifyHeadBtn(5),
+  m_crouchBtn(8), m_initPoseBtn(0),  m_enableBtn(9), m_modifyHeadBtn(5),
+  m_muteBtn(1), m_disableLifeBtn(2), m_triggerOpenEventBtn(3), 
   m_maxVx(1.0), m_maxVy(1.0), m_maxVw(0.5),
   m_maxHeadYaw(2.0943), m_maxHeadPitch(0.7853),
   m_bodyPoseTimeOut(5.0),
@@ -80,6 +81,10 @@ TeleopNaoJoy::TeleopNaoJoy()
   m_stiffnessDisableClient = nh.serviceClient<std_srvs::Empty>("body_stiffness/disable");
   m_stiffnessEnableClient = nh.serviceClient<std_srvs::Empty>("body_stiffness/enable");
 
+  std::string prefix;
+  nh.param<std::string>("tf_prefix",prefix,"");
+  m_muteClient = nh.serviceClient<std_srvs::Empty>(prefix+"/mute");
+  m_changeLifeClient = nh.serviceClient<std_srvs::Empty>(prefix+"/autonomous_life/trigger_interactivity");
 
   if (!m_bodyPoseClient.waitForServer(ros::Duration(3.0))){
     ROS_WARN_STREAM("Could not connect to \"body_pose\" action server, "
@@ -142,6 +147,7 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
   // TODO: make buttons generally configurable by mapping btn_id => pose_string
 
   if (m_enabled && buttonTriggered(m_crouchBtn, joy) && m_bodyPoseClient.isServerConnected()){
+    std::cout << "pressed crouch button" << std::endl;
     if (callBodyPoseClient("crouch")){
       std_srvs::Empty e;
       m_stiffnessDisableClient.call(e);
@@ -149,7 +155,22 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
   }
 
   if (m_enabled && buttonTriggered(m_initPoseBtn, joy) && m_bodyPoseClient.isServerConnected()){
+    std::cout << "pressed init button" << std::endl;
     callBodyPoseClient("init");
+  }
+
+  if (buttonTriggered(m_muteBtn, joy)){
+    std::cout << "pressed m_muteBtn button" << std::endl;
+    std_srvs::Empty e;
+    m_muteClient.call(e);
+  }
+
+  if (buttonTriggered(m_disableLifeBtn, joy)){
+    std::cout << "pressed disableLife button" << std::endl;
+  }
+
+  if (buttonTriggered(m_triggerOpenEventBtn, joy)){
+    std::cout << "pressed disableLife button" << std::endl;
   }
 
   if (buttonTriggered(m_enableBtn, joy)){

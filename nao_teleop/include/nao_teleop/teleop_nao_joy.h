@@ -37,6 +37,7 @@
 #include <std_msgs/String.h>
 #include <geometry_msgs/Twist.h>
 #include <std_srvs/Empty.h>
+#include <std_srvs/Trigger.h>
 #include <naoqi_bridge_msgs/JointAnglesWithSpeed.h>
 #include <naoqi_bridge_msgs/BodyPoseAction.h>
 #include <actionlib/client/simple_action_client.h>
@@ -107,6 +108,9 @@ protected:
   int m_initPoseBtn;
   int m_enableBtn;
   int m_modifyHeadBtn;
+  int m_muteBtn;
+  int m_disableLifeBtn;
+  int m_triggerOpenEventBtn;
   double m_maxVx;
   double m_maxVy;
   double m_maxVw;
@@ -130,6 +134,8 @@ protected:
   ros::ServiceClient m_cmdVelClient;
   ros::ServiceClient m_stiffnessDisableClient;
   ros::ServiceClient m_stiffnessEnableClient;
+  ros::ServiceClient m_muteClient;
+  ros::ServiceClient m_changeLifeClient;
   actionlib::SimpleActionClient<naoqi_bridge_msgs::BodyPoseAction> m_bodyPoseClient;
   geometry_msgs::Twist m_motion;
   naoqi_bridge_msgs::JointAnglesWithSpeed m_headAngles;
