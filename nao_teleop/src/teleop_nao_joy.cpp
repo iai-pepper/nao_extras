@@ -33,6 +33,7 @@
 #include <naoqi_bridge_msgs/BodyPoseActionGoal.h>
 #include <naoqi_bridge_msgs/CmdVelService.h>
 #include <naoqi_bridge_msgs/JointTrajectoryAction.h>
+#include <std_srvs/Trigger.h>
 
 using sensor_msgs::Joy;
 
@@ -83,8 +84,8 @@ TeleopNaoJoy::TeleopNaoJoy()
 
   std::string prefix;
   nh.param<std::string>("tf_prefix",prefix,"");
-  m_muteClient = nh.serviceClient<std_srvs::Empty>(prefix+"/mute");
-  m_changeLifeClient = nh.serviceClient<std_srvs::Empty>(prefix+"/autonomous_life/trigger_interactivity");
+  m_muteClient = nh.serviceClient<std_srvs::Trigger>("/"+prefix+"/mute");
+  m_changeLifeClient = nh.serviceClient<std_srvs::Trigger>("/"+prefix+"/autonomous_life/trigger_interactivity");
 
   if (!m_bodyPoseClient.waitForServer(ros::Duration(3.0))){
     ROS_WARN_STREAM("Could not connect to \"body_pose\" action server, "
@@ -167,6 +168,8 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
 
   if (buttonTriggered(m_disableLifeBtn, joy)){
     std::cout << "pressed disableLife button" << std::endl;
+    std_srvs::Empty e;
+    m_changeLifeClient.call(e);
   }
 
   if (buttonTriggered(m_triggerOpenEventBtn, joy)){
