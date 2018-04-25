@@ -110,7 +110,7 @@ protected:
   int m_modifyHeadBtn;
   int m_muteBtn;
   int m_disableLifeBtn;
-  int m_triggerOpenEventBtn;
+  int m_showDefaulImgBtn;
   double m_maxVx;
   double m_maxVy;
   double m_maxVw;
@@ -136,6 +136,7 @@ protected:
   ros::ServiceClient m_stiffnessEnableClient;
   ros::ServiceClient m_muteClient;
   ros::ServiceClient m_changeLifeClient;
+  ros::ServiceClient m_showDefaulImgBtn;
   actionlib::SimpleActionClient<naoqi_bridge_msgs::BodyPoseAction> m_bodyPoseClient;
   geometry_msgs::Twist m_motion;
   naoqi_bridge_msgs::JointAnglesWithSpeed m_headAngles;

@@ -42,7 +42,7 @@ TeleopNaoJoy::TeleopNaoJoy()
 : privateNh("~"), m_enabled(false),
   m_xAxis(3), m_yAxis(2), m_turnAxis(0), m_headYawAxis(4),	m_headPitchAxis(5),
   m_crouchBtn(8), m_initPoseBtn(0),  m_enableBtn(9), m_modifyHeadBtn(5),
-  m_muteBtn(1), m_disableLifeBtn(2), m_triggerOpenEventBtn(3), 
+  m_muteBtn(1), m_disableLifeBtn(2), m_showDefaulImgBtn(3), 
   m_maxVx(1.0), m_maxVy(1.0), m_maxVw(0.5),
   m_maxHeadYaw(2.0943), m_maxHeadPitch(0.7853),
   m_bodyPoseTimeOut(5.0),
@@ -86,6 +86,7 @@ TeleopNaoJoy::TeleopNaoJoy()
   nh.param<std::string>("tf_prefix",prefix,"");
   m_muteClient = nh.serviceClient<std_srvs::Trigger>("/"+prefix+"/mute");
   m_changeLifeClient = nh.serviceClient<std_srvs::Trigger>("/"+prefix+"/autonomous_life/trigger_interactivity");
+  m_showDefaultImage = nh.serviceClient<std_srvs::Trigger>("/"+prefix+"/hide_image");
 
   if (!m_bodyPoseClient.waitForServer(ros::Duration(3.0))){
     ROS_WARN_STREAM("Could not connect to \"body_pose\" action server, "
@@ -162,18 +163,20 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
 
   if (buttonTriggered(m_muteBtn, joy)){
     std::cout << "pressed m_muteBtn button" << std::endl;
-    std_srvs::Empty e;
-    m_muteClient.call(e);
+    std_srvs::Trigger t;
+    m_muteClient.call(t);
   }
 
   if (buttonTriggered(m_disableLifeBtn, joy)){
     std::cout << "pressed disableLife button" << std::endl;
-    std_srvs::Empty e;
-    m_changeLifeClient.call(e);
+    std_srvs::Trigger t;
+    m_changeLifeClient.call(t);
   }
 
-  if (buttonTriggered(m_triggerOpenEventBtn, joy)){
-    std::cout << "pressed disableLife button" << std::endl;
+  if (buttonTriggered(m_showDefaulImgBtn, joy)){
+    std::cout << "pressed showDefaultImage button" << std::endl;
+    std_srvs::Trigger t;
+    m_showDefaultImage.call(t);
   }
 
   if (buttonTriggered(m_enableBtn, joy)){
