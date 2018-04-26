@@ -42,7 +42,7 @@ TeleopNaoJoy::TeleopNaoJoy()
 : privateNh("~"), m_enabled(false),
   m_xAxis(3), m_yAxis(2), m_turnAxis(0), m_headYawAxis(4),	m_headPitchAxis(5),
   m_crouchBtn(8), m_initPoseBtn(0),  m_enableBtn(9), m_modifyHeadBtn(5),
-  m_muteBtn(1), m_disableLifeBtn(2), m_showDefaulImgBtn(3), 
+  m_muteBtn(1), m_disableLifeBtn(2), m_showDefaulImgBtn(3), m_triggerSmileNewsletterBtn(6),
   m_maxVx(1.0), m_maxVy(1.0), m_maxVw(0.5),
   m_maxHeadYaw(2.0943), m_maxHeadPitch(0.7853),
   m_bodyPoseTimeOut(5.0),
@@ -177,6 +177,17 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
     std::cout << "pressed showDefaultImage button" << std::endl;
     std_srvs::Trigger t;
     m_showDefaultImage.call(t);
+  }
+
+  if (buttonTriggered(m_triggerSmileNewsletterBtn, joy)){
+    std::cout << "switch the smile_newsletter param" << std::endl;
+    bool current_status;
+    nh.param<bool>("smile_newsletter",current_status,false);
+    if(current_status) {
+      nh.setParam("smile_newsletter",true);
+    } else {
+      nh.setParam("smile_newsletter",false);
+    }
   }
 
   if (buttonTriggered(m_enableBtn, joy)){

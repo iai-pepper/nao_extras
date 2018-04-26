@@ -111,6 +111,7 @@ protected:
   int m_muteBtn;
   int m_disableLifeBtn;
   int m_showDefaulImgBtn;
+  int m_triggerSmileNewsletterBtn;
   double m_maxVx;
   double m_maxVy;
   double m_maxVw;
