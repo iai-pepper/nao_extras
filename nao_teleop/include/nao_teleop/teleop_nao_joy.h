@@ -136,7 +136,7 @@ protected:
   ros::ServiceClient m_stiffnessEnableClient;
   ros::ServiceClient m_muteClient;
   ros::ServiceClient m_changeLifeClient;
-  ros::ServiceClient m_showDefaulImgBtn;
+  ros::ServiceClient m_showDefaultImage;
   actionlib::SimpleActionClient<naoqi_bridge_msgs::BodyPoseAction> m_bodyPoseClient;
   geometry_msgs::Twist m_motion;
   naoqi_bridge_msgs::JointAnglesWithSpeed m_headAngles;
