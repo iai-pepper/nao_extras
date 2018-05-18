@@ -183,10 +183,13 @@ void TeleopNaoJoy::joyCallback(const Joy::ConstPtr& joy){
     std::cout << "switch the smile_newsletter param" << std::endl;
     bool current_status;
     nh.param<bool>("smile_newsletter",current_status,false);
+    std::cout << current_status << std::endl;
     if(current_status) {
-      nh.setParam("smile_newsletter",true);
+      std::cout << "current_status is true" << std::endl;
+      nh.setParam("/pepper_robot/smile_newsletter",false);
     } else {
-      nh.setParam("smile_newsletter",false);
+      std::cout << "current_status is false" << std::endl;
+      nh.setParam("/pepper_robot/smile_newsletter",true);
     }
   }
 
